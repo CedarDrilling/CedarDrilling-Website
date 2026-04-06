@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cedar Drilling – EPC Africa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0c0f18;
+    --dark: #111827;
+    --panel: #161d2e;
+    --border: #1e2d4a;
+    --cedar: #1e5bbc;
+    --cedar-light: #3a74d4;
+    --cedar-dim: rgba(30,91,188,0.15);
+    --white: #eef2f8;
+    --muted: #7a8aaa;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(10,10,8,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--cedar);
+    clip-path: polygon(50% 0%, 61% 11%, 75% 7%, 78% 22%, 92% 28%, 87% 42%, 96% 54%, 84% 63%, 84% 78%, 70% 80%, 62% 93%, 50% 87%, 38% 93%, 30% 80%, 16% 78%, 16% 63%, 4% 54%, 13% 42%, 8% 28%, 22% 22%, 25% 7%, 39% 11%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-text {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cedar); }
+
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--cedar);
+    border: none;
+    padding: 10px 22px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--cedar-light); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 160px 64px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cedar);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--cedar);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 8vw, 120px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+
+  h1 em {
+    color: var(--cedar);
+    font-style: normal;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--cedar);
+    border: none;
+    padding: 14px 32px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--cedar-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 14px 32px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--cedar); color: var(--cedar); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--black) 0%, transparent 40%);
+    z-index: 1;
+  }
+
+  .hero-bg-graphic {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(200,132,26,0.12) 0%, transparent 70%),
+      linear-gradient(180deg, var(--black) 0%, transparent 30%, transparent 70%, var(--black) 100%);
+    z-index: 0;
+  }
+
+  /* Grid of lines */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  .hero-stat-block {
+    position: absolute;
+    right: 64px;
+    bottom: 80px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-end;
+  }
+
+  .hero-stat {
+    text-align: right;
+  }
+
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 52px;
+    color: var(--cedar);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* The big diagonal text */
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-family: var(--font-display);
+    font-size: 200px;
+    color: rgba(200,132,26,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: 10px;
+  }
+
+  /* Partners strip */
+  .partners-strip {
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 64px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    overflow: hidden;
+  }
+
+  .partners-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-right: 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .partner-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: rgba(240,237,230,0.35);
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .partner-name:hover { color: var(--cedar); }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 120px 64px;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cedar);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--cedar);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 80px);
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  h2 em { color: var(--cedar); font-style: normal; }
+
+  .section-intro {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 64px;
+  }
+
+  /* ─── SERVICES ─── */
+  #services {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #services::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,132,26,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    background: var(--panel);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--cedar);
+    transition: height 0.3s;
+  }
+  .service-card:hover::before { height: 100%; }
+
+  .service-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--cedar);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    color: var(--cedar);
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .service-items {
+    margin-top: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .service-items li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(240,237,230,0.5);
+    padding-left: 16px;
+    position: relative;
+    letter-spacing: 0.5px;
+  }
+
+  .service-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cedar);
+    font-size: 10px;
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects {
+    background: var(--black);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--dark);
+    padding: 48px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .project-card:hover { background: var(--panel); }
+
+  .project-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .tag.energy { border-color: rgba(200,132,26,0.4); color: var(--cedar); }
+  .tag.mining { border-color: rgba(100,130,100,0.4); color: #7ab87a; }
+  .tag.wind { border-color: rgba(80,140,200,0.4); color: #7ab4e0; }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .project-location {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--cedar);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .project-mw {
+    font-family: var(--font-display);
+    font-size: 96px;
+    color: rgba(30,91,188,0.25);
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-top: 16px;
+  }
+
+  /* ─── GEOGRAPHY ─── */
+  #geography {
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .geo-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .geo-map {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG Africa outline */
+  .africa-svg {
+    width: 88%;
+    height: 88%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .geo-pins {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pin {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: default;
+  }
+
+  .pin-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--cedar);
+    border-radius: 50%;
+    position: relative;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  .pin-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--cedar);
+    animation: pulse-ring 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .pin-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--cedar);
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--dark);
+    padding: 2px 6px;
+  }
+
+  .geo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .geo-country {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .geo-country:first-child { border-top: 1px solid var(--border); }
+
+  .geo-country-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--cedar);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .geo-country-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+    flex: 1;
+  }
+
+  .geo-country-sectors {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ─── WHY ─── */
+  #why {
+    background: var(--black);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 0;
+  }
+
+  .pillar {
+    background: var(--dark);
+    padding: 40px 28px;
+    transition: background 0.3s;
+  }
+  .pillar:hover { background: var(--panel); }
+
+  .pillar-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--cedar);
+    margin-bottom: 20px;
+  }
+
+  .pillar-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .pillar-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ─── HSE STRIP ─── */
+  .hse-strip {
+    background: var(--cedar);
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .hse-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .hse-items {
+    display: flex;
+    gap: 48px;
+  }
+
+  .hse-item {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hse-check {
+    width: 18px;
+    height: 18px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .contact-block {}
+
+  .contact-block-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cedar);
+    margin-bottom: 10px;
+  }
+
+  .contact-block-value {
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .contact-block-value a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-block-value a:hover { color: var(--cedar); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--black);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--cedar);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .form-submit {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--cedar);
+    border: none;
+    padding: 16px 32px;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--cedar-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 32px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: rgba(240,237,230,0.3);
+  }
+
+  .footer-reg {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(240,237,230,0.2);
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(240,237,230,0.2);
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1100px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .pillars-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero-left { padding: 120px 24px 60px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .pillars-grid { grid-template-columns: 1fr 1fr; }
+    .geo-layout { grid-template-columns: 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hse-strip { flex-direction: column; }
+    .hse-items { flex-wrap: wrap; gap: 20px; }
+    .partners-strip { gap: 24px; padding: 20px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg width="160" height="44" viewBox="0 0 340 88" xmlns="http://www.w3.org/2000/svg">
+      <!-- Gear shape -->
+      <g transform="translate(42,44)">
+        <circle cx="0" cy="0" r="30" fill="none" stroke="#1e5bbc" stroke-width="5.5"/>
+        <circle cx="0" cy="0" r="13" fill="none" stroke="#1e5bbc" stroke-width="4.5"/>
+        <!-- Gear teeth: 12 teeth -->
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(0)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(30)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(60)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(90)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(120)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(150)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(180)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(210)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(240)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(270)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(300)"/>
+        <rect x="-4" y="-42" width="8" height="10" rx="2" fill="#1e5bbc" transform="rotate(330)"/>
+      </g>
+      <!-- CED dark, AR blue -->
+      <text x="94" y="43" font-family="'Bebas Neue', sans-serif" font-size="40" letter-spacing="1" fill="#eef2f8">CED</text>
+      <text x="168" y="43" font-family="'Bebas Neue', sans-serif" font-size="40" letter-spacing="1" fill="#1e5bbc">AR</text>
+      <!-- DRILLING -->
+      <text x="95" y="62" font-family="'DM Sans', sans-serif" font-size="12" letter-spacing="5" fill="#7a8aaa" font-weight="300">DRILLING</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#geography">Geography</a></li>
+    <li><a href="#why">Why Cedar</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">EPC · Central &amp; Southern Africa</div>
+    <h1>BUILD<br><em>INFRA-</em><br>STRUCTURE</h1>
+    <p class="hero-sub">Engineering, Procurement and Construction solutions across energy, mining and industrial sectors — delivered in challenging emerging markets where it matters most.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid"></div>
+    <div class="hero-bg-graphic"></div>
+    <div class="hero-bg-text">EPC</div>
+    <div class="hero-stat-block">
+      <div class="hero-stat">
+        <div class="hero-stat-num">244</div>
+        <div class="hero-stat-label">MW Delivered</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5+</div>
+        <div class="hero-stat-label">Countries Active</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Strategic Partners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS STRIP -->
+<div class="partners-strip">
+  <div class="partners-label">Strategic Partners</div>
+  <div class="partner-name">POWERCHINA</div>
+  <div class="partner-name">YELLOW RIVER ENGINEERING</div>
+  <div class="partner-name">SINOHYDRO</div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">Core Services</div>
+  <h2>INTEGRATED<br><em>EPC</em> DELIVERY</h2>
+  <p class="section-intro">From concept engineering through to commissioning, Cedar Drilling manages the full project lifecycle — coordinating procurement, construction and quality assurance under a single contract.</p>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <div class="service-title">EPC Delivery</div>
+      <div class="service-desc">Fully integrated engineering, procurement and construction under a single point of accountability.</div>
+      <ul class="service-items">
+        <li>Project engineering &amp; design</li>
+        <li>Equipment procurement</li>
+        <li>Construction execution</li>
+        <li>Commissioning &amp; handover</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="1"/><path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="service-title">Civil Construction</div>
+      <div class="service-desc">Heavy civil works across industrial, energy and transport sectors in demanding environments.</div>
+      <ul class="service-items">
+        <li>Earthworks &amp; site preparation</li>
+        <li>Foundations &amp; structures</li>
+        <li>Concrete &amp; road works</li>
+        <li>Industrial platforms</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+      <div class="service-title">Energy Infrastructure</div>
+      <div class="service-desc">Power generation, transmission and renewable energy infrastructure across the continent.</div>
+      <ul class="service-items">
+        <li>Hydropower development</li>
+        <li>Solar PV — utility scale</li>
+        <li>Wind farm civil works</li>
+        <li>Substations &amp; grid connection</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <div class="service-title">Mining Infrastructure</div>
+      <div class="service-desc">Underground and surface mining infrastructure built for operational reliability and safety.</div>
+      <ul class="service-items">
+        <li>Process plants</li>
+        <li>Mine development civil works</li>
+        <li>Haul roads &amp; access</li>
+        <li>Bulk materials handling</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+      <div class="service-title">Project Management</div>
+      <div class="service-desc">Rigorous PM systems ensuring cost, schedule and quality targets are met on every project.</div>
+      <ul class="service-items">
+        <li>Cost control &amp; reporting</li>
+        <li>Schedule management</li>
+        <li>Quality assurance</li>
+        <li>Client reporting</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <div class="service-title">Water &amp; Utilities</div>
+      <div class="service-desc">Water infrastructure, utilities and logistics facilities supporting industrial operations.</div>
+      <ul class="service-items">
+        <li>Water supply infrastructure</li>
+        <li>Logistics &amp; transport hubs</li>
+        <li>Roads &amp; bridges</li>
+        <li>Utility installations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">Selected Projects</div>
+  <h2>PROVEN<br>IN THE <em>FIELD</em></h2>
+  <p class="section-intro">Cedar Drilling has delivered complex projects across utility-scale renewables, underground mining, hydropower and wind farm civils throughout Southern and Central Africa.</p>
+
+  <div class="projects-grid reveal">
+    <div class="project-card featured">
+      <div>
+        <div class="project-tags">
+          <span class="tag wind">Wind · Civils</span>
+          <span class="tag">South Africa</span>
+        </div>
+        <div class="project-title">Oya Wind Farm</div>
+        <div class="project-location">South Africa</div>
+        <div class="project-desc">Main civils contractor for the 128 MW Oya Wind Farm. Scope included internal access roads from R356 intersection to WTG 17, bulk earthworks, roadbed preparation, layer works, compaction and gravel surfacing. Design and construction of low-water crossings and drainage structures for all-weather access, plus integrated stormwater and erosion management.</div>
+      </div>
+      <div>
+        <div class="project-mw">128<br>MW</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-tags">
+        <span class="tag energy">Solar · EPC</span>
+        <span class="tag">Zimbabwe</span>
+      </div>
+      <div class="project-title">Victoria Falls 100 MW Solar Plant</div>
+      <div class="project-location">Zimbabwe</div>
+      <div class="project-desc">Full EPC scope for a 100 MW utility-scale solar PV development near Victoria Falls. Works encompassed civil works, structural foundations, electrical balance-of-plant and grid connection infrastructure.</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-tags">
+        <span class="tag energy">Hydro · Energy</span>
+        <span class="tag">DRC — Ituri Province</span>
+      </div>
+      <div class="project-title">Bunia Hydropower Plant</div>
+      <div class="project-location">D.R. Congo · Ituri Province</div>
+      <div class="project-desc">16 MW run-of-river hydropower plant rehabilitation and construction. Works included civil structures, powerhouse, penstocks, electromechanical installation and full grid integration.</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-tags">
+        <span class="tag mining">Mining · Civil</span>
+        <span class="tag">Zimbabwe</span>
+      </div>
+      <div class="project-title">Underground Coking Coal — Hwange</div>
+      <div class="project-location">Zimbabwe · Hwange Colliery</div>
+      <div class="project-desc">Underground mining infrastructure for coking coal extraction. Scope included mine development civil works, underground access structures, surface facilities and logistics infrastructure at Hwange Colliery.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GEOGRAPHY -->
+<section id="geography">
+  <div class="section-tag">Operational Geography</div>
+  <h2>ACTIVE<br>ACROSS <em>AFRICA</em></h2>
+  <div class="geo-layout reveal">
+    <div class="geo-map">
+      <!-- Accurate Africa SVG -->
+      <svg class="africa-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <path d="
+          M155,12 L170,10 L188,14 L205,22 L218,34 L228,50 L234,66
+          L240,58 L248,54 L258,56 L264,64 L262,76 L254,84
+          L258,96 L262,112 L264,130 L262,148 L256,164
+          L264,172 L270,184 L272,200 L268,216 L260,228
+          L268,236 L274,250 L276,266 L272,282 L264,296
+          L258,312 L248,328 L236,344 L222,358 L208,370
+          L196,380 L182,388 L168,392 L154,390 L140,384
+          L126,374 L112,360 L100,344 L90,328 L82,312
+          L74,294 L68,276 L64,258 L62,240 L64,222
+          L68,206 L74,190 L82,176 L88,162 L90,148
+          L88,134 L84,120 L80,106 L78,92 L80,78
+          L86,66 L94,56 L104,48 L116,40 L128,32
+          L140,22 L148,16 Z
+          M234,66 L242,72 L250,80 L254,84
+        " fill="rgba(30,91,188,0.18)" stroke="#1e5bbc" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- Madagascar -->
+        <ellipse cx="298" cy="320" rx="14" ry="36" fill="rgba(30,91,188,0.12)" stroke="#1e5bbc" stroke-width="1" transform="rotate(-10,298,320)"/>
+      </svg>
+      <div class="geo-pins">
+        <!-- South Africa - bottom centre -->
+        <div class="pin" style="bottom: 11%; left: 42%;">
+          <div class="pin-dot"></div>
+          <div class="pin-label">South Africa</div>
+        </div>
+        <!-- Zimbabwe - lower centre-right -->
+        <div class="pin" style="bottom: 26%; left: 51%;">
+          <div class="pin-dot"></div>
+          <div class="pin-label">Zimbabwe</div>
+        </div>
+        <!-- Zambia - centre-right -->
+        <div class="pin" style="bottom: 34%; left: 47%;">
+          <div class="pin-dot"></div>
+          <div class="pin-label">Zambia</div>
+        </div>
+        <!-- DRC - centre left -->
+        <div class="pin" style="top: 34%; left: 33%;">
+          <div class="pin-dot"></div>
+          <div class="pin-label">D.R. Congo</div>
+        </div>
+        <!-- Angola - centre left lower -->
+        <div class="pin" style="top: 48%; left: 28%;">
+          <div class="pin-dot"></div>
+          <div class="pin-label">Angola</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="geo-list">
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">South Africa</div>
+        <div class="geo-country-sectors">Wind · Solar · Civils</div>
+      </div>
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">Zimbabwe</div>
+        <div class="geo-country-sectors">Solar · Mining · Civil</div>
+      </div>
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">D.R. Congo</div>
+        <div class="geo-country-sectors">Hydro · Energy · Mining</div>
+      </div>
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">Zambia</div>
+        <div class="geo-country-sectors">Infrastructure · Energy</div>
+      </div>
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">Angola</div>
+        <div class="geo-country-sectors">Infrastructure · Industrial</div>
+      </div>
+      <div class="geo-country">
+        <div class="geo-country-dot"></div>
+        <div class="geo-country-name">Central Africa</div>
+        <div class="geo-country-sectors">Energy · Mining</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-tag">Why Cedar Drilling</div>
+  <h2>OUR <em>EDGE</em></h2>
+  <p class="section-intro">Five core strengths that differentiate Cedar Drilling in the complex, high-stakes environments of Central and Southern Africa.</p>
+
+  <div class="pillars-grid reveal">
+    <div class="pillar">
+      <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+      </svg>
+      <div class="pillar-title">Integrated EPC</div>
+      <div class="pillar-desc">Single-contract accountability from engineering through commissioning, eliminating interface risk.</div>
+    </div>
+    <div class="pillar">
+      <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+      <div class="pillar-title">Strong PM Systems</div>
+      <div class="pillar-desc">Robust cost control, scheduling and client reporting frameworks on every project.</div>
+    </div>
+    <div class="pillar">
+      <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <div class="pillar-title">Technical Expertise</div>
+      <div class="pillar-desc">Deep sector knowledge across energy, mining and civil works in emerging market conditions.</div>
+    </div>
+    <div class="pillar">
+      <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+      </svg>
+      <div class="pillar-title">Flexible Delivery</div>
+      <div class="pillar-desc">Adaptable scope structures built for the realities of complex, evolving project environments.</div>
+    </div>
+    <div class="pillar">
+      <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <div class="pillar-title">Proven in Africa</div>
+      <div class="pillar-desc">Track record across DRC, Zimbabwe, South Africa and Zambia in challenging, remote conditions.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HSE STRIP -->
+<div class="hse-strip">
+  <div class="hse-title">HEALTH · SAFETY · ENVIRONMENT</div>
+  <div class="hse-items">
+    <div class="hse-item">
+      <div class="hse-check">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <path d="M1 6l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Worker Safety
+    </div>
+    <div class="hse-item">
+      <div class="hse-check">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <path d="M1 6l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Environmental Protection
+    </div>
+    <div class="hse-item">
+      <div class="hse-check">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <path d="M1 6l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Regulatory Compliance
+    </div>
+    <div class="hse-item">
+      <div class="hse-check">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <path d="M1 6l4 4 6-7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Continuous Improvement
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Contact</div>
+  <h2>START A<br><em>CONVERSATION</em></h2>
+  <div class="contact-layout reveal">
+    <div class="contact-info">
+      <div class="contact-block">
+        <div class="contact-block-label">Email</div>
+        <div class="contact-block-value"><a href="/cdn-cgi/l/email-protection#c3aaada5ac83a0a6a7a2b1a7b1aaafafaaada4eda0acae"><span class="__cf_email__" data-cfemail="30595e565f7053555451425442595c5c595e571e535f5d">[email&#160;protected]</span></a></div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Telephone</div>
+        <div class="contact-block-value">
+          <a href="tel:+27827795959">+27 82 779 5959</a><br>
+          <a href="tel:+27794938172">+27 79 493 8172</a>
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Office</div>
+        <div class="contact-block-value">
+          73 Beyers Naude Dr, Cnr Preller<br>
+          Johannesburg, Gauteng 2195<br>
+          South Africa
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Registration</div>
+        <div class="contact-block-value" style="color: var(--muted); font-size: 13px;">
+          Cedar Drilling (Pty) Ltd<br>
+          Reg. No. 2019/034153/07
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" placeholder="Organisation">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Enquiry Type</label>
+        <select>
+          <option value="">Select...</option>
+          <option>EPC Project</option>
+          <option>Civil Construction</option>
+          <option>Energy Infrastructure</option>
+          <option>Mining Infrastructure</option>
+          <option>Partnership / Subcontracting</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your project..."></textarea>
+      </div>
+      <button class="form-submit">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CEDAR DRILLING</div>
+  <div class="footer-reg">Reg. No. 2019/034153/07 · www.cedardrilling.com</div>
+  <div class="footer-copy">© 2025 Cedar Drilling (Pty) Ltd</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach
